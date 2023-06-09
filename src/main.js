@@ -32,8 +32,8 @@ function init() {
     keyboardState = keyboard.getKeyArr();
     mouse = new Mouse();
     scene = new Scene(null,null,keyboard,mouse);
-    car = new Sprite(scene, "ySportsCar.png", 50, 30);
-    ball = new Sprite(scene, "ballSprite.png", 25, 25);
+    car = new Sprite(scene, "public/ySportsCar.png", 50, 30);
+    ball = new Sprite(scene, "public/ballSprite.png", 25, 25);
 
     // initialize values
     car.setPosition(200,200);
