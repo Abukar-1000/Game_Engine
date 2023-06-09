@@ -22,7 +22,7 @@ class Scene {
 
         // if values are not set
         if (width == null || height == null){
-            this.#set
+            this.setSize(900, 500);
         }
 
         // create pointers to global instances of the keyboard and mouse so state can be shared 
@@ -37,13 +37,17 @@ class Scene {
         // takes in a user defined callback, to change other states of the game
         const FIFTY_MILISECONDS = 50;
         // !ver
+        // document.onkeydown = this.keyboard.selectKey;
+		// document.onkeyup = this.keyboard.deselectKey;
+        console.log("hi")
         this.#intervalID = setInterval(updateCallbackFunction, FIFTY_MILISECONDS);
         
-        // update the state of the keyboard & mouse
-        this.keyboard.updateState();
-        this.mouse.updateState();
     } 
 
+    // might need
+    update() {
+
+    }
     stop(){
         // stops the game loop
         clearInterval(this.#intervalID);

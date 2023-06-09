@@ -1,10 +1,10 @@
 
 // class to keep track of keyboard input from user
-class Keyboard {
+export class Keyboard {
     #keysArr;
 
     constructor() {
-
+        this.#keysArr;
         // declare key constants
         this.KEY_A = 65; 
         this.KEY_B = 66; 
@@ -69,29 +69,43 @@ class Keyboard {
             return false;
         });
     }
-    #selectKey(event){
+    
+    #selectKey(keyCode){
         // (! might have an issue) helper method to update state of the keyboard
-        this.currentKey = event.keyCode
+        this.currentKey = keyCode
         this.#keysArr[this.currentKey] = true;
+        console.log(keyCode);
     }
-    #deselectKey(event){
+    #deselectKey(keyCode){
         // helper method to update state of the keyboard
+        console.log("fires");
         this.currentKey = null;
-        this.#keysArr[event.keyCode] = false;
+        this.#keysArr[keyCode] = false;
     }
     // public methods 
     display(){
         console.log(this.#keysArr);
     }
-
-    updateState(){
-        // updates the state of the keyboard based on the user input ( keypressed, keyReleased ) 
-        document.onkeydown = this.#selectKey;
-		document.onkeyup = this.#deselectKey;
+    getKeyArr(){
+        return this.#keysArr;
+    }
+    updateState(document){
+        // updates the state of the keyboard based on the user input ( keypressed, keyReleased )
+        // document.addEventListener("keyup", this.deselectKey);
+        // document.addEventListener("keydown", this.selectKey);
+        
+        document.onkeyup = e => {
+            // console.log(`${e.keyCode} released`);
+            this.#deselectKey(e.keyCode);
+        }
+        document.onkeydown = (e) => {
+            // console.log(`${e.keyCode} pressed`)
+            this.#selectKey(e.keyCode);
+        }
     }
 }
 
-class Mouse {
+export class Mouse {
 
     #x_pos;
     #y_pos;
@@ -107,13 +121,14 @@ class Mouse {
     
 
     // public methods
-    updateState(){
+    updateState(document){
         // updates the state of the mouse based on the user input ( mouse pressed, mouse Released ) 
         document.mouseClicked = false;
         // moved
         document.onmousemove = (event) => {
-            this.#x_pos = e.pageX;
-            this.#y_pos = e.pageY;
+            this.#x_pos = event.pageX;
+            this.#y_pos = event.pageY;
+            console.log(`(${this.#x_pos}, ${this.#y_pos})`)
         }
         
         // pressed 
@@ -141,4 +156,3 @@ class Mouse {
         return this.#mouseClicked;
     }
 }
-export default Keyboard; 
