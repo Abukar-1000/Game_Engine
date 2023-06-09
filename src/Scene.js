@@ -36,7 +36,6 @@ class Scene {
     start(updateCallbackFunction){
         // takes in a user defined callback, to change other states of the game
         const FIFTY_MILISECONDS = 50;
-        console.log("hi")
         this.#intervalID = setInterval(updateCallbackFunction, FIFTY_MILISECONDS);
     } 
 

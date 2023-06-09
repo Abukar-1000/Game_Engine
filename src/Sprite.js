@@ -180,7 +180,7 @@ export class Sprite {
         
         if (this.#y > BORDER_DATA.bottomBorder){
             FLAGS.offBottom = true;
-            console.log(this.#x,this.#y);
+            // console.log(this.#x,this.#y);
         }
         
         // respond to potential out of bounds

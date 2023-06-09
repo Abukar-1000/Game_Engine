@@ -2,7 +2,6 @@ import Scene from "./Scene.js";
 import { Keyboard, Mouse } from "./UserInput.js";
 import { BOUNDARY_ACTIONS, Sprite } from "./Sprite.js";
 
-// console.log(BOUNDARY_ACTIONS)
 var keyboard;
 var keyboardState;
 var mouse;
@@ -34,15 +33,13 @@ function init() {
     mouse = new Mouse();
     scene = new Scene(null,null,keyboard,mouse);
     car = new Sprite(scene, "ySportsCar.png", 50, 30);
-    ball = new Sprite(scene, "ballSprite.png", 15, 15);
+    ball = new Sprite(scene, "ballSprite.png", 25, 25);
 
-    console.log(car);
     // initialize values
     car.setPosition(200,200);
     // set up event listeners
     keyboard.updateState(document)
     mouse.updateState(document)
-    console.log(document)
     scene.start(main);
     
 }
@@ -51,7 +48,6 @@ function controlCar(){
     const MAX_SPEED = 1.2;
 
     if (keyboardState[keyboard.KEY_W]){
-        console.log("hit");
         let newSpeed = Math.min(car.getSpeed(), MAX_SPEED);
         car.changeSpeedBy(newSpeed);
     }
@@ -67,8 +63,10 @@ function controlCar(){
 }
 
 function applyFrictionToBall(){
-    const FRICTION_REDUCTION = 0.985;
-    ball.setSpeed(ball.getSpeed() * FRICTION_REDUCTION);
+    const FRICTION_REDUCTION_FOR_BALL = 0.98;
+    const FRICTION_REDUCTION_FOR_CAR = 0.96;
+    ball.setSpeed(ball.getSpeed() * FRICTION_REDUCTION_FOR_BALL);
+    car.setSpeed(car.getSpeed() * FRICTION_REDUCTION_FOR_CAR);
 
 }
 

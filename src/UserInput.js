@@ -74,18 +74,13 @@ export class Keyboard {
         // (! might have an issue) helper method to update state of the keyboard
         this.currentKey = keyCode
         this.#keysArr[this.currentKey] = true;
-        console.log(keyCode);
     }
     #deselectKey(keyCode){
         // helper method to update state of the keyboard
-        console.log("fires");
         this.currentKey = null;
         this.#keysArr[keyCode] = false;
     }
     // public methods 
-    display(){
-        console.log(this.#keysArr);
-    }
     getKeyArr(){
         return this.#keysArr;
     }
@@ -93,11 +88,9 @@ export class Keyboard {
         // updates the state of the keyboard based on the user input ( keypressed, keyReleased )
         
         document.onkeyup = e => {
-            // console.log(`${e.keyCode} released`);
             this.#deselectKey(e.keyCode);
         }
         document.onkeydown = (e) => {
-            // console.log(`${e.keyCode} pressed`)
             this.#selectKey(e.keyCode);
         }
     }
@@ -126,7 +119,6 @@ export class Mouse {
         document.onmousemove = (event) => {
             this.#x_pos = event.pageX;
             this.#y_pos = event.pageY;
-            // console.log(`(${this.#x_pos}, ${this.#y_pos})`)
         }
         
         // pressed 
