@@ -193,6 +193,12 @@ export class Sprite {
         }
 
     }
+    #calcVector(){
+        // alter the values for dx and dy using speed
+        this.#dx = this.#speed * Math.cos(this.#moveAngle);
+        this.#dy = this.#speed * Math.sin(this.#moveAngle);
+    }
+    
     // public methods
     changeImage(imgPath){
         // given a path changes the image, purpose is to be a setter
@@ -235,7 +241,13 @@ export class Sprite {
     }
     setSpeed(speed){
         // sets the speed of the sprite
-
+        this.#speed = speed;
+        this.calcVector();
+    }
+    calcSpeedAngle() {
+        // inverse function of calcVector, alters speed based on dx, dy
+        this.#speed = Math.sqrt(Math.pow(this.#dx, 2) + Math.pow(this.#dy, 2));
+        this.#moveAngle = Math.atan(this.#dy, this.#dx);
     }
 
     changeXBy(relativeChange){

@@ -128,7 +128,7 @@ export class Mouse {
         document.onmousemove = (event) => {
             this.#x_pos = event.pageX;
             this.#y_pos = event.pageY;
-            console.log(`(${this.#x_pos}, ${this.#y_pos})`)
+            // console.log(`(${this.#x_pos}, ${this.#y_pos})`)
         }
         
         // pressed 

@@ -4,9 +4,18 @@ import { BOUNDARY_ACTIONS, Sprite } from "./Sprite.js";
 
 console.log(BOUNDARY_ACTIONS)
 
+/* 
+partly used adt
+// timming => set interval
+// sprites supported
+// motion collision 
+
 // keyboard.updateState(document);
 // mouse.updateState(document);
-
+motion => moving balls
+collision => collides with walls
+boundary algorithm => bounce
+*/
 
 // initialize values
 function init() {
