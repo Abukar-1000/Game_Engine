@@ -36,12 +36,8 @@ class Scene {
     start(updateCallbackFunction){
         // takes in a user defined callback, to change other states of the game
         const FIFTY_MILISECONDS = 50;
-        // !ver
-        // document.onkeydown = this.keyboard.selectKey;
-		// document.onkeyup = this.keyboard.deselectKey;
         console.log("hi")
         this.#intervalID = setInterval(updateCallbackFunction, FIFTY_MILISECONDS);
-        
     } 
 
     // might need
@@ -91,6 +87,15 @@ class Scene {
         this.#canvas.style.cursor = "none";
     }
 
+    // unused
+    getPrivateContext(){
+        // gives access to the private context attribute
+        return this.#context;
+    }
+    getCanvas(){
+        // gives access to the private canvas DOM element
+        return this.#canvas;
+    }
     showCursor() {
         // shows the cursor (!)
         this.#canvas.style.cursor = "default";

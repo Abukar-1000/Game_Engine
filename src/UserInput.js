@@ -91,8 +91,6 @@ export class Keyboard {
     }
     updateState(document){
         // updates the state of the keyboard based on the user input ( keypressed, keyReleased )
-        // document.addEventListener("keyup", this.deselectKey);
-        // document.addEventListener("keydown", this.selectKey);
         
         document.onkeyup = e => {
             // console.log(`${e.keyCode} released`);

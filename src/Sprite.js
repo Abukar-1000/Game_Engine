@@ -36,8 +36,8 @@ export class Sprite {
         
         // resources 
         this.#scene = scene;
-        this.#canvas = scene.canvas;
-        this.#context = this.canvas.getContext("2d");
+        this.#canvas = scene.getCanvas();
+        this.#context = this.#canvas.getContext("2d");
         this.#image = new Image();
         this.#image.src = imageFile;
         this.#animation = false;
@@ -67,6 +67,8 @@ export class Sprite {
         this.#image.src = imgPath;
     }
 
+    // draw frame
+
     #draw(){
         // method to draw the internal state of the sprite onto the canvas
         // need to find a way to implement a friend function like in cpp
@@ -79,11 +81,7 @@ export class Sprite {
         localContext.translate(this.#x, this.#y);
         localContext.rotate(this.#imgAngle);
 
-        // will implement animations if necissary!
-        if (!this.#animation){
-            this.#animation.drawFrame(localContext);
-        }
-
+        localContext.drawImage(this.#image, 0 - (this.#width / 2), 0 - (this.#height / 2), this.#width, this.#height)
         // save transformations
         localContext.restore();
     }
@@ -107,13 +105,15 @@ export class Sprite {
     #reactToBounce(FLAGS, BORDER_DATA){
         // implements bounce property when boundery is hit
 
+
         let offTopOrBottom = FLAGS.offTop || FLAGS.offBottom;
         let offLeftOrRight = FLAGS.offLeft || FLAGS.offRight;
 
         // invert dx or dy
         if (offTopOrBottom) {
             this.#dy *= -1;
-        } else if (offLeftOrRight){
+        } 
+        if (offLeftOrRight){
             this.#dx *= -1;
         }
 
@@ -142,8 +142,8 @@ export class Sprite {
     #checkBounds() {
         // private helper method to check if we have hit the bounds of the canvas
 
-        let cameraX = 0; 
-        let cameraY = 0;
+        var cameraX = 0; 
+        var cameraY = 0;
 
         // boundary flags
         const FLAGS = {
@@ -154,16 +154,17 @@ export class Sprite {
         };
 
         // apply camera offsets
-        (this.camera)?  cameraX = this.#camera.cameraOffsetX : camY = this.#camera.cameraOffsetY;
+        (this.camera)?  cameraX = this.#camera.cameraOffsetX : cameraY = this.#camera.cameraOffsetY;
 
+        // catch undefined values that cause values to be NaN.
+        (cameraY === undefined)? cameraY = 0 : cameraY;
+        (cameraX === undefined)? cameraX = 0 : cameraX;
         const BORDER_DATA = {
             rightBorder: this.#cWidth + cameraX, 
             leftBorder: cameraX,
             topBorder: cameraY,
-            // (!) should be - ?
             bottomBorder: this.#cHeight + cameraY
         }
-        
         
         if (this.#x < BORDER_DATA.leftBorder){
             FLAGS.offLeft = true;
@@ -179,6 +180,7 @@ export class Sprite {
         
         if (this.#y > BORDER_DATA.bottomBorder){
             FLAGS.offBottom = true;
+            console.log(this.#x,this.#y);
         }
         
         // respond to potential out of bounds
@@ -198,11 +200,31 @@ export class Sprite {
         this.#dx = this.#speed * Math.cos(this.#moveAngle);
         this.#dy = this.#speed * Math.sin(this.#moveAngle);
     }
-    
+    #changeMoveAngleBy(degrees){
+        // alters the private move angle of the sprite
+        let radians = degrees * (Math.PI / 180);
+        this.#moveAngle += radians;
+        this.#calcVector();
+    }
+    #changeImageAngleBy(degrees){
+        // alters the image angle value given a theta in degrees
+        let radians = degrees * (Math.PI / 180);
+        this.#imgAngle += radians;
+    }
     // public methods
     changeImage(imgPath){
         // given a path changes the image, purpose is to be a setter
         this.#setImage(imgPath);
+    }
+    changeSpeedBy(relativeValue){
+        this.#speed += relativeValue;
+        this.#calcVector();
+    }
+    
+    changeAngleBy(degrees){
+        // changes the angle attributes of the sprite by a relative amount in degrees
+        this.#changeImageAngleBy(degrees);
+        this.#changeMoveAngleBy(degrees);
     }
 
     setPosition(x,y){
@@ -242,7 +264,7 @@ export class Sprite {
     setSpeed(speed){
         // sets the speed of the sprite
         this.#speed = speed;
-        this.calcVector();
+        this.#calcVector();
     }
     calcSpeedAngle() {
         // inverse function of calcVector, alters speed based on dx, dy
@@ -258,7 +280,6 @@ export class Sprite {
         // changes the y attribute, relative to its current value
         this.#y += relativeChange;
     }
-
     // might merge into a toggle meth
     show(){
         // if hidden shows the sprite
@@ -288,13 +309,21 @@ export class Sprite {
         // returns the private height of the sprite
         return this.#height;
     }
+    getSpeed(){
+        // returns the private speed attribute of the sprite
+        return this.#speed;
+    }
     update(){
         // updates the sprite on the canvas
         this.#x += this.#dx;
         this.#y += this.#dy;
 
-        this.checkBounds();
-        (this.#visible)? this.#draw(): null;
+        this.#checkBounds();
+        // console.log(this.#visible);
+        if (this.#visible) {
+            this.#draw();
+        }
+        // (this.#visible)? this.#draw(): this.#draw();
     }
 
     checkCollisionWith(OtherSprite){

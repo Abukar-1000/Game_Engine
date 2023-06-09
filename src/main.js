@@ -2,7 +2,15 @@ import Scene from "./Scene.js";
 import { Keyboard, Mouse } from "./UserInput.js";
 import { BOUNDARY_ACTIONS, Sprite } from "./Sprite.js";
 
-console.log(BOUNDARY_ACTIONS)
+// console.log(BOUNDARY_ACTIONS)
+var keyboard;
+var keyboardState;
+var mouse;
+var scene;
+var car;
+var ball;
+
+
 
 /* 
 partly used adt
@@ -19,30 +27,77 @@ boundary algorithm => bounce
 
 // initialize values
 function init() {
-    let keyboard = new Keyboard();
-    let mouse = new Mouse()
-    let scene = new Scene(null,null,keyboard,mouse);
+    
+    // create instances
+    keyboard = new Keyboard();
+    keyboardState = keyboard.getKeyArr();
+    mouse = new Mouse();
+    scene = new Scene(null,null,keyboard,mouse);
+    car = new Sprite(scene, "ySportsCar.png", 50, 30);
+    ball = new Sprite(scene, "ballSprite.png", 15, 15);
 
+    console.log(car);
+    // initialize values
+    car.setPosition(200,200);
     // set up event listeners
     keyboard.updateState(document)
     mouse.updateState(document)
-
-    // create game objects
-    const gameObjects = {
-        car: new Sprite()
-    }
     console.log(document)
-    scene.start(main)
+    scene.start(main);
     
 }
 
+function controlCar(){
+    const MAX_SPEED = 1.2;
 
+    if (keyboardState[keyboard.KEY_W]){
+        console.log("hit");
+        let newSpeed = Math.min(car.getSpeed(), MAX_SPEED);
+        car.changeSpeedBy(newSpeed);
+    }
+    if (keyboardState[keyboard.KEY_S]){
+        car.changeSpeedBy(-1);
+    }
+    if (keyboardState[keyboard.KEY_D]){
+        car.changeAngleBy(4);
+    }
+    if (keyboardState[keyboard.KEY_A]){
+        car.changeAngleBy(-4);
+    }
+}
+
+function applyFrictionToBall(){
+    const FRICTION_REDUCTION = 0.985;
+    ball.setSpeed(ball.getSpeed() * FRICTION_REDUCTION);
+
+}
+
+function reactToCollision(){
+    // alters the trajectory of the ball and plays a sound if it collides with the car
+    const CAR_MASS = .9;
+    let collided = car.checkCollisionWith(ball);
+    if (collided){
+
+        ball.changeAngleBy(25);
+        // account for force
+        let force = CAR_MASS * car.getSpeed();
+        ball.setSpeed(force);
+    }
+}
+// this is the update function
 function main(e) {
-    // document.querySelector("body").append("<h1>Firing with V Cylinders!!!</h1>");
-    
-    
-    // scene.updateState()
+    scene.clearScreen();
+    car.update();
+    ball.update();
+    reactToCollision();
+    controlCar();
+    applyFrictionToBall();
 }
 
 // runs app when document has loaded 
 document.addEventListener("DOMContentLoaded",init, false);
+
+// stop the game loop when user wants to leave
+window.onunload = e => {
+    scene.stop();
+}
