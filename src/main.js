@@ -48,7 +48,12 @@ function controlCar(){
     const MAX_SPEED = 1.2;
 
     if (keyboardState[keyboard.KEY_W]){
-        let newSpeed = Math.min(car.getSpeed(), MAX_SPEED);
+        let newSpeed;
+        if (car.getSpeed() < 0.1){
+            newSpeed = MAX_SPEED;
+        } else {
+            newSpeed = Math.min(car.getSpeed(), MAX_SPEED)
+        }
         car.changeSpeedBy(newSpeed);
     }
     if (keyboardState[keyboard.KEY_S]){
