@@ -21,13 +21,17 @@ boundary algorithm => bounce
 function init() {
     let keyboard = new Keyboard();
     let mouse = new Mouse()
+    let scene = new Scene(null,null,keyboard,mouse);
 
     // set up event listeners
     keyboard.updateState(document)
     mouse.updateState(document)
 
+    // create game objects
+    const gameObjects = {
+        car: new Sprite()
+    }
     console.log(document)
-    let scene = new Scene(null,null,keyboard,mouse);
     scene.start(main)
     
 }

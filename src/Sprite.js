@@ -247,7 +247,7 @@ export class Sprite {
     calcSpeedAngle() {
         // inverse function of calcVector, alters speed based on dx, dy
         this.#speed = Math.sqrt(Math.pow(this.#dx, 2) + Math.pow(this.#dy, 2));
-        this.#moveAngle = Math.atan(this.#dy, this.#dx);
+        this.#moveAngle = Math.atan2(this.#dy, this.#dx);
     }
 
     changeXBy(relativeChange){
@@ -272,14 +272,61 @@ export class Sprite {
         // returns the visible state of the sprite
         return this.#visible;
     }
-
+    getXPos(){
+        // returns the private x position
+        return this.#x;    
+    }
+    getYPos(){
+        // returns the private y position
+        return this.#y;    
+    }
+    getWidth(){
+        // returns the private width of the sprite
+        return this.#width;
+    }
+    getHeight(){
+        // returns the private height of the sprite
+        return this.#height;
+    }
     update(){
         // updates the sprite on the canvas
         this.#x += this.#dx;
         this.#y += this.#dy;
 
-        this.checkBounds()
+        this.checkBounds();
+        (this.#visible)? this.#draw(): null;
+    }
 
+    checkCollisionWith(OtherSprite){
+        // checks if a collision occured between 2 sprites
+        let collided = false;
+        let bothSpritesVisible = this.#visible && OtherSprite.getVisibility();
+
+        if (bothSpritesVisible){
+            const BOUNDS = {
+                myLeft: this.#x - (this.#width / 2),
+                myRight: this.#x + (this.#width / 2),
+                myTop: this.#y - (this.#height / 2),
+                myBottom: this.#y + (this.#height / 2),
+                OtherSpriteLeft: OtherSprite.getXPos() - (OtherSprite.getWidth() / 2),
+                OtherSpriteRight: OtherSprite.getXPos() + (OtherSprite.getWidth() / 2),
+                OtherSpriteTop: OtherSprite.getYPos() - (OtherSprite.getHeight() / 2),
+                OtherSpriteBottom: OtherSprite.getYPos() + (OtherSprite.getHeight() / 2)
+            };
+
+            // assume collision and try to disprove
+            collided = true;
+            let didNotCollide = (BOUNDS.myBottom < BOUNDS.OtherSpriteTop) ||
+                                (BOUNDS.myTop > BOUNDS.OtherSpriteBottom) ||
+                                (BOUNDS.myRight < BOUNDS.OtherSpriteLeft) ||
+                                (BOUNDS.myLeft > BOUNDS.OtherSpriteRight)
+
+            if (didNotCollide){
+                collided = false;
+            }
+        }
+
+        return collided;
     }
 
     
