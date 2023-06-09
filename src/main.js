@@ -62,7 +62,7 @@ function controlCar(){
     }
 }
 
-function applyFrictionToBall(){
+function applyFriction(){
     const FRICTION_REDUCTION_FOR_BALL = 0.98;
     const FRICTION_REDUCTION_FOR_CAR = 0.96;
     ball.setSpeed(ball.getSpeed() * FRICTION_REDUCTION_FOR_BALL);
@@ -89,7 +89,7 @@ function main(e) {
     ball.update();
     reactToCollision();
     controlCar();
-    applyFrictionToBall();
+    applyFriction();
 }
 
 // runs app when document has loaded 
