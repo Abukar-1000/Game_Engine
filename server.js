@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 // Set public folder as root
 app.use(express.static('public'));
 
-// Allow front-end access to node_modules folder
+// Allow access to node_modules folder
 app.use('/scripts', express.static(`${__dirname}/node_modules/`));
 
 
