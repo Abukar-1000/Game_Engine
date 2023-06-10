@@ -5,8 +5,7 @@ This is my implementation of a game engine using vanilla JavaScript <br>
 Click [HERE](https://main--sensational-pony-762058.netlify.app/) to take a look.
 
 # Class Documentation
-<h1>Documentation to all method and functions:</h1>
-
+* Documentation to all method and functions:
 * [Main.js](ducumentation/Main.md)
 * [Scene.js](ducumentation/Scene.md)
 * [Sprite.js](ducumentation/Sprite.md)
