@@ -88,7 +88,7 @@ function reactToCollision(){
     }
 }
 // this is the update function
-function main(e) {
+function main() {
     scene.clearScreen();
     car.update();
     ball.update();
