@@ -148,9 +148,6 @@ export class Sprite {
             offBottom: false
         };
 
-        // apply camera offsets
-        // (this.camera)?  cameraX = this.#camera.cameraOffsetX : cameraY = this.#camera.cameraOffsetY;
-
         // catch undefined values that cause values to be NaN.
         (cameraY === undefined)? cameraY = 0 : cameraY;
         (cameraX === undefined)? cameraX = 0 : cameraX;
