@@ -28,7 +28,6 @@ export class Sprite {
     #speed 
     #visible 
     #boundAction 
-
     // initialize attributes
     constructor(scene, imageFile, width, height){
         
@@ -46,7 +45,8 @@ export class Sprite {
         this.#cWidth = parseInt(this.#canvas.width);
         this.#visible = true;
         this.#boundAction = BOUNDARY_ACTIONS.BOUNCE;
-        
+        this.camera = false;
+
         // movement
         this.#x = 100;
         this.#y = 100;
