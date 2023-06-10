@@ -38,7 +38,6 @@ export class Sprite {
         this.#context = this.#canvas.getContext("2d");
         this.#image = new Image();
         this.#image.src = imageFile;
-        this.#animation = false;
         
         // dimensions
         this.#width = width;
