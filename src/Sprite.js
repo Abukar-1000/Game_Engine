@@ -15,7 +15,6 @@ export class Sprite {
     #canvas;
     #context;
     #image
-    #animation = false; // becomes Animation Class
     #width
     #height
     #cHeight;
@@ -27,11 +26,10 @@ export class Sprite {
     #imgAngle 
     #moveAngle 
     #speed 
-    #camera 
     #visible 
     #boundAction 
 
-    // initialize aattributes
+    // initialize attributes
     constructor(scene, imageFile, width, height){
         
         // resources 
@@ -47,7 +45,6 @@ export class Sprite {
         this.#height = height;
         this.#cHeight = parseInt(this.#canvas.height);
         this.#cWidth = parseInt(this.#canvas.width);
-        this.#camera = false;
         this.#visible = true;
         this.#boundAction = BOUNDARY_ACTIONS.BOUNCE;
         
@@ -138,7 +135,6 @@ export class Sprite {
             this.hide();
         }
     }
-    // (!) calc speed angle | setSpeed | 
     #checkBounds() {
         // private helper method to check if we have hit the bounds of the canvas
 
@@ -314,7 +310,7 @@ export class Sprite {
         return this.#speed;
     }
     update(){
-        // updates the sprite on the canvas
+        // updates the sprite on the canvas adn its internal state.
         this.#x += this.#dx;
         this.#y += this.#dy;
 

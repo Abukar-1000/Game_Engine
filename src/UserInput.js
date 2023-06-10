@@ -71,7 +71,7 @@ export class Keyboard {
     }
     
     #selectKey(keyCode){
-        // (! might have an issue) helper method to update state of the keyboard
+        // helper method to update state of the keyboard when a key is pressed down.
         this.currentKey = keyCode
         this.#keysArr[this.currentKey] = true;
     }
@@ -84,6 +84,7 @@ export class Keyboard {
     getKeyArr(){
         return this.#keysArr;
     }
+    
     updateState(document){
         // updates the state of the keyboard based on the user input ( keypressed, keyReleased )
         

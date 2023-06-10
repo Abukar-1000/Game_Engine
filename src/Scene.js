@@ -39,10 +39,7 @@ class Scene {
         this.#intervalID = setInterval(updateCallbackFunction, FIFTY_MILISECONDS);
     } 
 
-    // might need
-    update() {
 
-    }
     stop(){
         // stops the game loop
         clearInterval(this.#intervalID);
@@ -81,12 +78,6 @@ class Scene {
         this.#canvas.style.OTransform = `translate(${this.#left}px, ${this.#top}px)`;
     }
 
-    hideCursor() {
-        // hides the cursor (!)
-        this.#canvas.style.cursor = "none";
-    }
-
-    // unused
     getPrivateContext(){
         // gives access to the private context attribute
         return this.#context;
@@ -94,10 +85,6 @@ class Scene {
     getCanvas(){
         // gives access to the private canvas DOM element
         return this.#canvas;
-    }
-    showCursor() {
-        // shows the cursor (!)
-        this.#canvas.style.cursor = "default";
     }
 }
 

@@ -1,9 +1,14 @@
+
 body {
+    background-color: black;
+}
+body > * {
     display: flexbox;
     justify-content: center;
     align-items: center;
 }
 
 h1 {
+    color: #d82222;
     font-size: 3rem;
 }
